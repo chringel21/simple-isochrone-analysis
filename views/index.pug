@@ -1,0 +1,113 @@
+extends layout
+
+block content
+  #map
+  .shadow-md.bg-white.px-1.absolute.rounded(class="top-2.5 right-2.5")
+    ul.relative
+      li.relative.p-2
+        button#fetch-points.default.w-full(
+          data-mdb-ripple="true",
+          data-mdb-ripple-color="dark",
+          onClick="addPoints()",
+          type="button"
+        )= "Lade Altglascontainer"
+      li.realtive.p-2
+        button#calculate-isochrones.w-full(
+          data-mdb-ripple="true",
+          data-mdb-ripple-color="dark",
+          onClick="calculateIsochrones()",
+          type="button",
+          disabled
+        )= "Erreichbarkeit berechnen"
+    #legend.p-5.hidden
+      h4= "Erreichbarkeit"
+        div.
+          #[span.rounded-full.inline-block(class="h-2.5 mr-1.5 w-2.5", style="background-color: #1a9641")] 2 min
+        div.
+          #[span.rounded-full.inline-block(class="h-2.5 mr-1.5 w-2.5", style="background-color: #a6d96a")] 4 min
+        div.
+          #[span.rounded-full.inline-block(class="h-2.5 mr-1.5 w-2.5", style="background-color: #ffffbf")] 6 min
+        div.
+          #[span.rounded-full.inline-block(class="h-2.5 mr-1.5 w-2.5", style="background-color: #fdae61")] 8 min
+        div.
+          #[span.rounded-full.inline-block(class="h-2.5 mr-1.5 w-2.5", style="background-color: #d7191c")] 10 min
+  script(type="text/javascript").
+    const map = new maplibregl.Map({
+      container: "map",
+      style: "#{ STYLE_URL }",
+      center: [13.0, 52.5],
+      zoom: 10,
+    });
+
+    let points;
+    window.map = map;
+    const fetchButton = document.getElementById("fetch-points");
+    const isochroneButton = document.getElementById("calculate-isochrones");
+
+    const addPoints = async () => {
+      fetchButton.classList.remove("default");
+      fetchButton.toggleAttribute("disabled");
+      fetchButton.textContent = "Lade...";
+      const res = await fetch("/points");
+      const json = await res.json();
+      console.log(json);
+      if (json) {
+        map.addSource("potsdam-altglas", {
+          type: "geojson",
+          data: json.points,
+        });
+        map.addLayer({
+          id: "altglas",
+          type: "circle",
+          source: "potsdam-altglas",
+          paint: {
+            "circle-radius": 6,
+            "circle-color": "#B42222",
+          },
+        });
+        map.fitBounds(json.bbox);
+        points = json.points;
+
+        isochroneButton.classList.add("default");
+        isochroneButton.toggleAttribute("disabled");
+      }
+      fetchButton.classList.add("default");
+      fetchButton.toggleAttribute("disabled");
+      fetchButton.textContent = "Lade Altglascontainer";
+    };
+
+    const calculateIsochrones = async () => {
+      isochroneButton.classList.remove("default");
+      isochroneButton.toggleAttribute("disabled");
+      isochroneButton.textContent = "Berechne...";
+      const res = await fetch("/isochrone", {
+        method: "post",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(points),
+      });
+      const json = await res.json();
+      console.log(json);
+      if (json) {
+        map.addSource("isochrones-altglas", {
+          type: "geojson",
+          data: json,
+        });
+        map.addLayer({
+          id: "isochrones",
+          type: "fill",
+          source: "isochrones-altglas",
+          layout: {},
+          paint: {
+            "fill-color": ["interpolate", ["linear"], ["get", "bucket"], 0, "#1a9641", 1, "#a6d96a", 2, "#ffffbf", 3, "#fdae61", 4, "#d7191c"],
+            "fill-opacity": 0.5,
+          },
+        });
+      }
+      isochroneButton.classList.add("default");
+      isochroneButton.toggleAttribute("disabled");
+      isochroneButton.textContent = "Erreichbarkeit berechnen";
+      document.getElementById("legend").classList.remove("hidden");
+    };
