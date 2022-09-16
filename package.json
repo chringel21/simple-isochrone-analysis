@@ -1,8 +1,9 @@
 {
-  "name": "wie-weit-zum-altglas",
+  "name": "simple-isochrone-analysis",
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "start": "node ./bin/www",
     "dev": "nodemon ./bin/www",
     "ui": "browser-sync start --config bs-config.js --verbose",
     "tailwind:css": "postcss public/stylesheets/tailwind.css --output public/stylesheets/style.css --watch",
