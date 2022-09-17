@@ -48,7 +48,7 @@ block content
       fetchButton.classList.remove("default");
       fetchButton.toggleAttribute("disabled");
       fetchButton.textContent = "Lade...";
-      const res = await fetch("/points");
+      const res = await fetch("#{ BASE }" + "/points");
       const json = await res.json();
       console.log(json);
       if (json) {
@@ -80,7 +80,7 @@ block content
       isochroneButton.classList.remove("default");
       isochroneButton.toggleAttribute("disabled");
       isochroneButton.textContent = "Berechne...";
-      const res = await fetch("/isochrone", {
+      const res = await fetch("#{ BASE }" + "/isochrone", {
         method: "post",
         headers: {
           Accept: "application/json",
