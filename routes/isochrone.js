@@ -17,7 +17,8 @@ router.post("/", async (req, res, next) => {
   try {
     const points = req.body;
     const rawGeoms = await getRawGeometries(points);
-    const isochrones = getIsochrones(rawGeoms);
+    const smoothedGeoms = smoothGeoms(rawGeoms);
+    const isochrones = getIsochrones(smoothedGeoms);
     res.send(isochrones);
   } catch (e) {
     console.error(e);
@@ -83,6 +84,15 @@ const buildDifference = (polygons) => {
     polygons[i] = difference.default(polygons[i], polygons[i - 1]);
   }
   return polygons;
+};
+
+const smoothGeoms = (geoms) => {
+  let smoothedGeoms = [];
+  for (const geom of geoms) {
+    let smoothed = polygonSmooth(geom, { iterations: 2 });
+    smoothedGeoms.push(smoothed.features[0]);
+  }
+  return smoothedGeoms;
 };
 
 module.exports = router;
