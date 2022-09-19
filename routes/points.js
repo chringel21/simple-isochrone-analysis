@@ -1,15 +1,15 @@
 const express = require("express");
 
+const axios = require("axios");
 const bbox = require("@turf/bbox");
 const router = express.Router();
 
 router.get("/", async (req, res, next) => {
   try {
     const points = await getPoints();
-    const bounds = bbox.default(points);
     res.send({
       points: points,
-      bbox: bounds,
+      bbox: bbox.default(points),
     });
   } catch (e) {
     console.error(e);
@@ -17,10 +17,10 @@ router.get("/", async (req, res, next) => {
 });
 
 const getPoints = async () => {
-  const res = await fetch(
+  const res = await axios(
     "https://opendata.potsdam.de/explore/dataset/standplatze-glassammlung/download/?format=geojson&timezone=Europe/Berlin&lang=de"
   );
-  return await res.json();
+  return await res.data;
 };
 
 module.exports = router;

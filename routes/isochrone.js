@@ -1,5 +1,6 @@
 const express = require("express");
 
+const axios = require("axios");
 const turfHelpers = require("@turf/helpers");
 const dissolve = require("@turf/dissolve");
 const union = require("@turf/union");
@@ -42,8 +43,8 @@ const fetchApi = async (point) => {
   const coords = point.reverse().join(",");
   const url = `${GRAPHHOPPER_ISOCHRONE_URL}?point=${coords}&profile=foot&time_limit=600&buckets=${BUCKETS}`;
 
-  const result = await fetch(url);
-  return await result.json();
+  const result = await axios.get(url);
+  return await result.data;
 };
 
 const getIsochrones = (polygons) => {
