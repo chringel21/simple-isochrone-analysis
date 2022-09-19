@@ -17,6 +17,7 @@
     "@turf/helpers": "^6.5.0",
     "@turf/polygon-smooth": "^6.5.0",
     "@turf/union": "^6.5.0",
+    "axios": "^0.27.2",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "dotenv": "^16.0.2",
