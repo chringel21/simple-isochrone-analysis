@@ -9,6 +9,13 @@ block content
       onClick="addPoints()",
       type="button"
     )= "Lade Altglascontainer"
+    .grid.grid-cols-2.gap-4
+      .form-group.mb-2
+        input(placeholder="Maximale Gehzeit", type="number", min=1, step=1)
+        .text-sm.text-gray-500.mt-1= "in Minuten"
+      .form-group.mb-2
+        input(placeholder="Intervalle", type="number", min=1, max=10, step=1)
+        .text-sm.text-gray-500.mt-1= "min 1, max 10"
     button#calculate-isochrones.btn.btn-default.w-full.mb-2(
       data-mdb-ripple="true",
       data-mdb-ripple-color="dark",
