@@ -2,23 +2,26 @@ extends layout
 
 block content
   #map
-  .shadow-md.bg-white.px-1.absolute.rounded(class="top-2.5 right-2.5")
-    ul.relative
-      li.relative.p-2
-        button#fetch-points.default.w-full(
-          data-mdb-ripple="true",
-          data-mdb-ripple-color="dark",
-          onClick="addPoints()",
-          type="button"
-        )= "Lade Altglascontainer"
-      li.realtive.p-2
-        button#calculate-isochrones.w-full(
-          data-mdb-ripple="true",
-          data-mdb-ripple-color="dark",
-          onClick="calculateIsochrones()",
-          type="button",
-          disabled
-        )= "Erreichbarkeit berechnen"
+  .block.shadow-lg.bg-white.p-2.absolute.rounded-lg(class="top-2.5 right-2.5")
+    button#fetch-points.btn.btn-default.w-full.mb-2(
+      data-mdb-ripple="true",
+      data-mdb-ripple-color="dark",
+      onClick="addPoints()",
+      type="button"
+    )= "Lade Altglascontainer"
+    button#calculate-isochrones.btn.btn-default.w-full.mb-2(
+      data-mdb-ripple="true",
+      data-mdb-ripple-color="dark",
+      onClick="calculateIsochrones()",
+      type="button",
+      disabled
+    )= "Erreichbarkeit berechnen"
+    button#reset.btn.btn-danger.w-full(
+      data-mdb-ripple="true",
+      data-mdb-ripple-color="dark",
+      onClick="reset()",
+      type="button"
+    )= "Zurücksetzen"
     #legend.p-5.hidden
       h4= "Erreichbarkeit"
         div.
@@ -43,6 +46,7 @@ block content
     window.map = map;
     const fetchButton = document.getElementById("fetch-points");
     const isochroneButton = document.getElementById("calculate-isochrones");
+    const resetButton = document.getElementById("reset");
 
     const addPoints = async () => {
       fetchButton.classList.remove("default");
@@ -110,4 +114,13 @@ block content
       isochroneButton.toggleAttribute("disabled");
       isochroneButton.textContent = "Erreichbarkeit berechnen";
       document.getElementById("legend").classList.remove("hidden");
+    };
+
+    const reset = () => {
+      points = null;
+      map.getLayer("isochrones") && map.removeLayer("isochrones");
+      map.getSource("isochrones-altglas") && map.removeSource("isochrones-altglas");
+      map.getLayer("altglas") && map.removeLayer("altglas");
+      map.getSource("potsdam-altglas") && map.removeSource("potsdam-altglas");
+      !isochroneButton.hasAttribute("disabled") && isochroneButton.toggleAttribute("disabled");
     };
