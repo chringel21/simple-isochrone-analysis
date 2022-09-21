@@ -79,73 +79,89 @@ const addPoints = async () => {
   fetchButton.classList.remove("default");
   fetchButton.toggleAttribute("disabled");
   fetchButton.textContent = "Lade...";
-  const res = await fetch(STATIC_BASE + "/points");
-  const json = await res.json();
-  console.log(json);
-  if (json) {
-    map.addSource("potsdam-altglas", {
-      type: "geojson",
-      data: json.points,
-    });
-    map.addLayer({
-      id: "altglas",
-      type: "circle",
-      source: "potsdam-altglas",
-      paint: {
-        "circle-radius": 6,
-        "circle-color": "#B42222",
-      },
-    });
-    map.fitBounds(json.bbox);
-    points = json.points;
+  try {
+    const res = await fetch(STATIC_BASE + "/points");
+    const json = await res.json();
+    console.log(json);
+    if (json) {
+      map.addSource("potsdam-altglas", {
+        type: "geojson",
+        data: json.points,
+      });
+      map.addLayer({
+        id: "altglas",
+        type: "circle",
+        source: "potsdam-altglas",
+        paint: {
+          "circle-radius": 6,
+          "circle-color": "#B42222",
+        },
+      });
+      map.fitBounds(json.bbox);
+      points = json.points;
 
-    isochroneButton.classList.add("default");
-    isochroneButton.toggleAttribute("disabled");
+      isochroneButton.classList.add("default");
+      isochroneButton.toggleAttribute("disabled");
+    }
+  } catch (e) {
+    console.error(e);
+    setTimeout(() => {
+      fetchButton.textContent = "Fehler!";
+    }, 2000);
+  } finally {
+    fetchButton.classList.add("default");
+    fetchButton.toggleAttribute("disabled");
+    fetchButton.textContent = "Lade Altglascontainer";
   }
-  fetchButton.classList.add("default");
-  fetchButton.toggleAttribute("disabled");
-  fetchButton.textContent = "Lade Altglascontainer";
 };
 
 const calculateIsochrones = async () => {
   isochroneButton.classList.remove("default");
   isochroneButton.toggleAttribute("disabled");
   isochroneButton.textContent = "Berechne...";
-  const formData = { points: points };
-  formData.time_limit = document.querySelector(
-    'input[name="time_limit"]'
-  ).value;
-  formData.buckets = document.querySelector('input[name="buckets"]').value;
-  const res = await fetch(STATIC_BASE + "/isochrone", {
-    method: "post",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(formData),
-  });
-  const json = await res.json();
-  console.log(json);
-  if (json) {
-    map.addSource("isochrones-altglas", {
-      type: "geojson",
-      data: json,
-    });
-    map.addLayer({
-      id: "isochrones",
-      type: "fill",
-      source: "isochrones-altglas",
-      layout: {},
-      paint: {
-        "fill-color": ["get", "color"],
-        "fill-opacity": 0.5,
+  try {
+    const formData = { points: points };
+    formData.time_limit = document.querySelector(
+      'input[name="time_limit"]'
+    ).value;
+    formData.buckets = document.querySelector('input[name="buckets"]').value;
+    const res = await fetch(STATIC_BASE + "/isochrone", {
+      method: "post",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
+      body: JSON.stringify(formData),
     });
+    const json = await res.json();
+    console.log(json);
+    if (json) {
+      map.addSource("isochrones-altglas", {
+        type: "geojson",
+        data: json,
+      });
+      map.addLayer({
+        id: "isochrones",
+        type: "fill",
+        source: "isochrones-altglas",
+        layout: {},
+        paint: {
+          "fill-color": ["get", "color"],
+          "fill-opacity": 0.5,
+        },
+      });
+    }
+  } catch (e) {
+    console.error(e);
+    setTimeout(() => {
+      isochroneButton.textContent = "Fehler!";
+    }, 2000);
+  } finally {
+    isochroneButton.classList.add("default");
+    isochroneButton.toggleAttribute("disabled");
+    isochroneButton.textContent = "Erreichbarkeit berechnen";
+    document.querySelector("h4").textContent = "Erreichbarkeit";
   }
-  isochroneButton.classList.add("default");
-  isochroneButton.toggleAttribute("disabled");
-  isochroneButton.textContent = "Erreichbarkeit berechnen";
-  document.getElementById("legend").classList.remove("hidden");
 };
 
 const reset = () => {
