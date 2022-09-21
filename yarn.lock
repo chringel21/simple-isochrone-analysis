@@ -684,6 +684,11 @@ color-name@^1.0.0, color-name@^1.1.4, color-name@~1.1.4:
   resolved "https://registry.yarnpkg.com/color-name/-/color-name-1.1.4.tgz#c2a09a87acbde69543de6f63fa3995c826c536a2"
   integrity sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==
 
+colorbrewer@^1.5.2:
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/colorbrewer/-/colorbrewer-1.5.2.tgz#5fd55e7fd34c589d56a407551ac0bab2e675980a"
+  integrity sha512-ssJS/RUbTyXY+2695r9ksroI9en6QOxL3jlmINc4QRVVpdoLvxB7ivp51/j2LecJIjC1bDQ30Mhb1D8X7zhu5A==
+
 combined-stream@^1.0.8:
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/combined-stream/-/combined-stream-1.0.8.tgz#c3d45a8b34fd730631a110a8a2520682b31d5a7f"
