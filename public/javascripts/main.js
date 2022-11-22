@@ -137,20 +137,7 @@ const calculateIsochrones = async () => {
     if (json) {
       const smoothedGeoms = smoothGeoms(json);
       const isochrones = getIsochrones(smoothedGeoms);
-      map.addSource("isochrones-altglas", {
-        type: "geojson",
-        data: isochrones,
-      });
-      map.addLayer({
-        id: "isochrones",
-        type: "fill",
-        source: "isochrones-altglas",
-        layout: {},
-        paint: {
-          "fill-color": ["get", "color"],
-          "fill-opacity": 0.5,
-        },
-      });
+      addLayer(isochrones, "isochrones");
     }
   } catch (e) {
     console.error(e);
@@ -162,6 +149,28 @@ const calculateIsochrones = async () => {
     isochroneButton.toggleAttribute("disabled");
     isochroneButton.textContent = "Erreichbarkeit berechnen";
     document.querySelector("h4").textContent = "Erreichbarkeit";
+  }
+};
+
+const addLayer = (geojson, name) => {
+  const sourceName = `${name}-source`;
+  if (map.getSource(sourceName)) {
+    map.getSource(sourceName).setData(geojson);
+  } else {
+    map.addSource(sourceName, {
+      type: "geojson",
+      data: geojson,
+    });
+    map.addLayer({
+      id: name,
+      type: "fill",
+      source: sourceName,
+      layout: {},
+      paint: {
+        "fill-color": ["get", "color"],
+        "fill-opacity": 0.5,
+      },
+    });
   }
 };
 
