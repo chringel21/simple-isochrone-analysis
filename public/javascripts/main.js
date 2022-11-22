@@ -124,7 +124,7 @@ const calculateIsochrones = async () => {
     formData.time_limit = document.querySelector(
       'input[name="time_limit"]'
     ).value;
-    formData.buckets = document.querySelector('input[name="buckets"]').value;
+    formData.buckets = getBuckets();
     const res = await fetch(STATIC_BASE + "/isochrone", {
       method: "post",
       headers: {
@@ -134,11 +134,12 @@ const calculateIsochrones = async () => {
       body: JSON.stringify(formData),
     });
     const json = await res.json();
-    console.log(json);
     if (json) {
+      const smoothedGeoms = smoothGeoms(json);
+      const isochrones = getIsochrones(smoothedGeoms);
       map.addSource("isochrones-altglas", {
         type: "geojson",
-        data: json,
+        data: isochrones,
       });
       map.addLayer({
         id: "isochrones",
@@ -162,6 +163,73 @@ const calculateIsochrones = async () => {
     isochroneButton.textContent = "Erreichbarkeit berechnen";
     document.querySelector("h4").textContent = "Erreichbarkeit";
   }
+};
+
+const getBuckets = () => {
+  return parseInt(document.querySelector('input[name="buckets"]').value);
+};
+
+const getIsochroneColors = (buckets) => {
+  let isochroneColors;
+  if (buckets === 2) {
+    isochroneColors = [colors[3][0], colors[3][2]];
+  } else if (buckets === 1) {
+    isochroneColors = [colors[3][2]];
+  } else {
+    isochroneColors = colors[buckets].reverse();
+  }
+  return isochroneColors;
+};
+
+const getIsochrones = (polygons) => {
+  const fc = turf.helpers.featureCollection(polygons);
+  const isochrones = turf.dissolve(fc, { propertyName: "bucket" });
+  for (const feature of isochrones.features) {
+    feature.properties.bucket = parseInt(feature.properties.bucket);
+  }
+  let unionedFeatures = unionFeatures(isochrones);
+  unionedFeatures = buildDifference(unionedFeatures);
+  isochrones.features = unionedFeatures;
+  return isochrones;
+};
+
+const unionFeatures = (featureCollection) => {
+  let unionedFeatures = [];
+  let unionedFeature;
+  const buckets = getBuckets();
+  const isochroneColors = getIsochroneColors(buckets);
+  for (let i = 0; i < buckets; i++) {
+    unionedFeature = null;
+    for (const feature of featureCollection.features) {
+      if (i === feature.properties.bucket) {
+        if (!unionedFeature) {
+          unionedFeature = feature;
+        }
+        unionedFeature = turf.union.default(unionedFeature, feature);
+      }
+    }
+
+    unionedFeature.properties.bucket = i;
+    unionedFeature.properties.color = isochroneColors[i];
+    unionedFeatures.push(unionedFeature);
+  }
+  return unionedFeatures;
+};
+
+const buildDifference = (polygons) => {
+  for (let i = polygons.length - 1; i > 0; i--) {
+    polygons[i] = turf.difference(polygons[i], polygons[i - 1]);
+  }
+  return polygons;
+};
+
+const smoothGeoms = (geoms) => {
+  let smoothedGeoms = [];
+  for (const geom of geoms) {
+    let smoothed = turf.polygonSmooth(geom, { iterations: 2 });
+    smoothedGeoms.push(smoothed.features[0]);
+  }
+  return smoothedGeoms;
 };
 
 const reset = () => {
