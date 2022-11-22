@@ -1,7 +1,6 @@
 const express = require("express");
 
 const axios = require("axios");
-const colorbrewer = require("colorbrewer");
 
 const router = express.Router();
 
