@@ -1,11 +1,6 @@
 const express = require("express");
 
 const axios = require("axios");
-const turfHelpers = require("@turf/helpers");
-const dissolve = require("@turf/dissolve");
-const union = require("@turf/union");
-const difference = require("@turf/difference");
-const polygonSmooth = require("@turf/polygon-smooth");
 const colorbrewer = require("colorbrewer");
 
 const router = express.Router();
