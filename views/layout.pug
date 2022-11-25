@@ -1,5 +1,5 @@
 doctype html
-html(lang="de")
+html(lang=locale)
   head
     base(href=BASE)
     meta(charset="utf-8")
@@ -7,7 +7,7 @@ html(lang="de")
       name="viewport",
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     )
-    title= title
+    title #{ __('title') }
     script(src=STATIC_BASE + "/javascripts/turf-build.js")
     script(src=STATIC_BASE + "/javascripts/colors.js")
     script(src=STATIC_BASE + "/javascripts/functions.js")

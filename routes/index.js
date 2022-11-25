@@ -1,5 +1,6 @@
 const express = require("express");
 const { config } = require("dotenv");
+const { __, getLocale } = require("i18n");
 const router = express.Router();
 
 config();
@@ -11,11 +12,13 @@ const INDEX_CONFIG = {
   STYLE_URL:
     process.env.STYLE_URL ||
     "http://localhost:8080/tiles/styles/osm-bright-gl-style/style.json",
-  title: "Wie weit zum Altglas",
+  title: __("title"),
 };
 
 /* GET home page. */
 router.get("/", (req, res, next) => {
+  const locale = getLocale(req);
+  INDEX_CONFIG.locale = locale;
   res.render("index", INDEX_CONFIG);
 });
 

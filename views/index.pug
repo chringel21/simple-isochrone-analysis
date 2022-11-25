@@ -9,14 +9,14 @@ block content
         data-mdb-ripple-color="dark",
         onClick="addPoints()",
         type="button"
-      )= "Lade Altglascontainer"
+      ) #{ __('loadPoints') }
       .grid.grid-cols-2.gap-4
         .form-group.mb-2
           label.form-label.inline-block.mb-2.text-gray-700(
             for="input-time-limit"
-          )= "Maximale Gehzeit"
+          ) #{ __('maxWalkingTime') }
           input#input-time-limit(
-            placeholder="Maximale Gehzeit",
+            placeholder=__("maxWalkingTime"),
             type="number",
             min=1,
             step=1,
@@ -24,11 +24,11 @@ block content
             name="time_limit",
             onchange="createLegend();"
           )
-          .text-xs.text-gray-500.mt-1= "in Minuten"
+          .text-xs.text-gray-500.mt-1 #{ __('inMinutes') }
         .form-group.mb-2
-          label.form-label.inline-block.mb-2.text-gray-700(for="input-buckets")= "Intervalle"
+          label.form-label.inline-block.mb-2.text-gray-700(for="input-buckets") #{ __('intervals') }
           input#input-buckets(
-            placeholder="Intervalle",
+            placeholder=__("intervals"),
             type="number",
             min=1,
             max=11,
@@ -43,14 +43,14 @@ block content
         data-mdb-ripple-color="dark",
         type="submit",
         disabled
-      )= "Erreichbarkeit berechnen"
+      ) #{ __('calculateReachability') }
       button#reset.btn.btn-danger.w-full(
         data-mdb-ripple="true",
         data-mdb-ripple-color="dark",
         type="button"
-      )= "Zurücksetzen"
+      ) #{ __('reset') }
     .p-5
-      h4= "Erreichbarkeit (Vorschau)"
+      h4 #{ __('reachabilityPreview') }
       #legend
         div.
           #[span.rounded-full.inline-block(class="h-2.5 mr-1.5 w-2.5", style="background-color: #4dac26")] 2 min
