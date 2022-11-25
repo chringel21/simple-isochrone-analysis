@@ -1,0 +1,11 @@
+{
+	"title": "Wie weit zum Altglas",
+	"loadPoints": "Lade Altglascontainer",
+	"maxWalkingTime": "Maximale Gehzeit",
+	"inMinutes": "in Minuten",
+	"intervals": "Intervalle",
+	"calculateReachability": "Erreichbarkeit berechnen",
+	"reset": "Zurücksetzen",
+	"reachabilityPreview": "Erreichbarkeit (Vorschau)",
+	"How far is the next glass container": "How far is the next glass container"
+}
