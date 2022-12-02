@@ -1,0 +1,10 @@
+{
+  "title": "How far is the next glass container",
+  "loadPoints": "Load glass containers",
+  "maxWalkingTime": "Max walking time",
+  "inMinutes": "in minutes",
+  "intervals": "Intervals",
+  "calculateReachability": "Calculate reachability",
+  "reset": "Reset",
+  "reachabilityPreview": "Reachability (Preview)"
+}

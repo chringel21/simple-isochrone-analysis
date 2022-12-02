@@ -1,0 +1,21 @@
+doctype html
+html(lang=locale)
+  head
+    base(href=BASE)
+    meta(charset="utf-8")
+    meta(
+      name="viewport",
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    )
+    title #{ __('title') }
+    script(src=STATIC_BASE + "/javascripts/turf-build.js")
+    script(src=STATIC_BASE + "/javascripts/colors.js")
+    script(src=STATIC_BASE + "/javascripts/functions.js")
+    script(src="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.js")
+    link(
+      href="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css",
+      rel="stylesheet"
+    )
+    link(rel="stylesheet", href=STATIC_BASE + "/stylesheets/style.css")
+  body
+    block content
