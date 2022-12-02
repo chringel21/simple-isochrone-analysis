@@ -13,6 +13,7 @@ const INDEX_CONFIG = {
     process.env.STYLE_URL ||
     "http://localhost:8080/tiles/styles/osm-bright-gl-style/style.json",
   title: __("title"),
+  PROD: process.env.NODE_ENV === "production" ? true : false,
 };
 
 /* GET home page. */

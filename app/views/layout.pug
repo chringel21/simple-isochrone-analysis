@@ -17,5 +17,7 @@ html(lang=locale)
       rel="stylesheet"
     )
     link(rel="stylesheet", href=STATIC_BASE + "/stylesheets/style.css")
+    if PROD
+      <script async defer data-website-id="59e2e93a-9a05-4d4c-b671-33eaec1b46f7" src="https://analytics.chringel.dev/umami.js"></script>
   body
     block content
