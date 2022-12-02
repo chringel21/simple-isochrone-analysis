@@ -66,3 +66,6 @@ data/sources
 data/styles
 data/tmp
 *.mbtiles
+
+# vscode
+.vscode
