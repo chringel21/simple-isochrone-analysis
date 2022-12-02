@@ -104,11 +104,11 @@ const getBuckets = () => {
 const getIsochroneColors = (buckets) => {
   let isochroneColors;
   if (buckets === 2) {
-    isochroneColors = [colors[3][0], colors[3][2]];
+    isochroneColors = [colors[3][2], colors[3][0]];
   } else if (buckets === 1) {
     isochroneColors = [colors[3][2]];
   } else {
-    isochroneColors = colors[buckets].reverse();
+    isochroneColors = colors[buckets];
   }
   return isochroneColors;
 };
