@@ -1,10 +1,17 @@
 const colors = {
   1: ["#a1d76a"],
-  2: ["#e9a3c9", "#a1d76a"],
-  3: ["#e9a3c9", "#f7f7f7", "#a1d76a"],
-  4: ["#d01c8b", "#f1b6da", "#b8e186", "#4dac26"],
-  5: ["#d01c8b", "#f1b6da", "#f7f7f7", "#b8e186", "#4dac26"],
-  6: ["#c51b7d", "#e9a3c9", "#fde0ef", "#e6f5d0", "#a1d76a", "#4d9221"],
+  2: ["#e9a3c9", "#a1d76a"].reverse(),
+  3: ["#e9a3c9", "#f7f7f7", "#a1d76a"].reverse(),
+  4: ["#d01c8b", "#f1b6da", "#b8e186", "#4dac26"].reverse(),
+  5: ["#d01c8b", "#f1b6da", "#f7f7f7", "#b8e186", "#4dac26"].reverse(),
+  6: [
+    "#c51b7d",
+    "#e9a3c9",
+    "#fde0ef",
+    "#e6f5d0",
+    "#a1d76a",
+    "#4d9221",
+  ].reverse(),
   7: [
     "#c51b7d",
     "#e9a3c9",
@@ -13,7 +20,7 @@ const colors = {
     "#e6f5d0",
     "#a1d76a",
     "#4d9221",
-  ],
+  ].reverse(),
   8: [
     "#c51b7d",
     "#de77ae",
@@ -23,7 +30,7 @@ const colors = {
     "#b8e186",
     "#7fbc41",
     "#4d9221",
-  ],
+  ].reverse(),
   9: [
     "#c51b7d",
     "#de77ae",
@@ -34,7 +41,7 @@ const colors = {
     "#b8e186",
     "#7fbc41",
     "#4d9221",
-  ],
+  ].reverse(),
   10: [
     "#8e0152",
     "#c51b7d",
@@ -46,7 +53,7 @@ const colors = {
     "#7fbc41",
     "#4d9221",
     "#276419",
-  ],
+  ].reverse(),
   11: [
     "#8e0152",
     "#c51b7d",
@@ -59,5 +66,5 @@ const colors = {
     "#7fbc41",
     "#4d9221",
     "#276419",
-  ],
+  ].reverse(),
 };

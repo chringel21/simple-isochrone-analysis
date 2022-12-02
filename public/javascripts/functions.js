@@ -104,9 +104,9 @@ const getBuckets = () => {
 const getIsochroneColors = (buckets) => {
   let isochroneColors;
   if (buckets === 2) {
-    isochroneColors = [colors[3][2], colors[3][0]];
+    isochroneColors = [colors[3][0], colors[3][2]];
   } else if (buckets === 1) {
-    isochroneColors = [colors[3][2]];
+    isochroneColors = [colors[3][0]];
   } else {
     isochroneColors = colors[buckets];
   }
@@ -188,7 +188,7 @@ const calculateIntervals = () => {
 
 const buildLegendEntries = (intervals) => {
   const length = intervals.length;
-  const legendColors = colors[length].reverse();
+  const legendColors = colors[length];
   let entries = [];
   for (i = 0; i < length; i++) {
     entries.push(

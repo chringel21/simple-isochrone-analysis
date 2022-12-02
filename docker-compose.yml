@@ -1,0 +1,37 @@
+version: "3.9"
+services:
+  planetiler:
+    image: ghcr.io/onthegomap/planetiler:latest
+    volumes:
+      - ./data:/data
+    environment:
+      - JAVA_TOOL_OPTIONS=-"Xmx1g"
+    command: --download --area=brandenburg
+  web:
+    image: nginx
+    volumes:
+      - ./data/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./data/app/build:/usr/share/nginx/html:ro
+    ports:
+      - "8080:80"
+    depends_on:
+      - tileserver
+      - routing
+  tileserver:
+    image: maptiler/tileserver-gl
+    volumes:
+      - ./data:/data
+    ports:
+      - "8282:8080"
+    command: --port 8080 --config /data/config-tileserver.json --public_url http://localhost:8080/tiles --verbose
+    depends_on:
+      - planetiler
+  routing:
+    image: israelhikingmap/graphhopper
+    volumes:
+      - ./data:/data
+    ports:
+      - "8989:8989"
+    command: --input /data/sources/brandenburg.osm.pbf --host 0.0.0.0 --config /data/config-graphhopper.yml
+    depends_on:
+      - planetiler
