@@ -1,0 +1,21 @@
+version: "3.9"
+services:
+  planetiler:
+    image: ghcr.io/onthegomap/planetiler:latest
+    volumes:
+      - ./data:/data
+    environment:
+      - JAVA_TOOL_OPTIONS=-"Xmx1g"
+    command: --download --area=brandenburg
+  styles:
+    image: bash:4.4
+    volumes:
+      - ./data:/data
+    command: bash /data/download_styles.sh
+  yarn_install:
+    image: node:18
+    working_dir: /home/node/app
+    volumes:
+      - ./app:/home/node/app
+    user: "node"
+    command: "yarn install"
