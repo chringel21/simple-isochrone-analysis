@@ -1,0 +1,60 @@
+{
+  "options": {
+    "paths": {
+      "root": "/data",
+      "fonts": "fonts",
+      "styles": "styles",
+      "mbtiles": "/data"
+    }
+  },
+  "styles": {
+    "maptiler-basic-gl-style": {
+      "style": "openmaptiles/maptiler-basic-gl-style/style-local.json",
+      "tilejson": {
+        "bounds": [11.22404, 51.35252, 14.77917, 53.5784]
+      }
+    },
+    "dark-matter-gl-style": {
+      "style": "openmaptiles/dark-matter-gl-style/style-local.json",
+      "tilejson": {
+        "bounds": [11.22404, 51.35252, 14.77917, 53.5784]
+      }
+    },
+    "fiord-color-gl-style": {
+      "style": "openmaptiles/fiord-color-gl-style/style-local.json",
+      "tilejson": {
+        "bounds": [11.22404, 51.35252, 14.77917, 53.5784]
+      }
+    },
+    "osm-bright-gl-style": {
+      "style": "openmaptiles/osm-bright-gl-style/style-local.json",
+      "tilejson": {
+        "bounds": [11.22404, 51.35252, 14.77917, 53.5784]
+      }
+    },
+    "positron-gl-style": {
+      "style": "openmaptiles/positron-gl-style/style-local.json",
+      "tilejson": {
+        "bounds": [11.22404, 51.35252, 14.77917, 53.5784]
+      }
+    },
+    "osm-liberty": {
+      "style": "maputknik/osm-liberty-gh-pages/style.json",
+      "tilejson": {
+        "bounds": [11.22404, 51.35252, 14.77917, 53.5784]
+      }
+    }
+  },
+  "data": {
+    "v3": {
+      "mbtiles": "output.mbtiles"
+    },
+    "natural_earth_2_shaded_relief": {
+      "mbtiles": "natural_earth_2.raster.mbtiles",
+      "type": "raster",
+      "tilejson": {
+        "format": "png"
+      }
+    }
+  }
+}
