@@ -2,6 +2,8 @@
 
 Calculate the reachability of [glass containers](https://opendata.potsdam.de/explore/dataset/standplatze-glassammlung/information/) in Potsdam/Germany using [Graphhopper](https://github.com/graphhopper/graphhopper).
 
+**Disclaimer:** This is a prototype, was hacked together over the course of two days and doesn't represent a fully fledged application. Bugs may occur! 🪲
+
 ## [🔗Running app](https://chringel.dev/wie-weit-zum-altglas/)
 
 ![Reachability of glass containers in Potsdam/Germany](app.png)
